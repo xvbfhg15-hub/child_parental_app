@@ -24,23 +24,17 @@ jobs:
         with:
           channel: 'stable'
 
+      - name: Create Android Folder
+        run: flutter create . --platforms=android --org com.example
+
       - name: Install dependencies
         run: flutter pub get
 
       - name: Build Debug APK
         run: flutter build apk --debug
 
-      - name: Find and Upload APK
-        run: |
-          # البحث عن ملف APK في أي مكان داخل المجلد
-          path_to_apk=$(find . -name "*.apk" | head -n 1)
-          echo "Found APK at: $path_to_apk"
-          
-          # رفع الملف باستخدام أداة actions/upload-artifact@v4
-          # (هنا سنستخدم curl أو نترك الـ Action يقوم بالمهمة)
-        
-      - name: Upload Artifact
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: my-app-apk
-          path: '**/*.apk'
+          name: app-debug-apk
+          path: build/app/outputs/flutter-apk/app-debug.apk
