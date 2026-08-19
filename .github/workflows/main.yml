@@ -24,11 +24,14 @@ jobs:
         with:
           channel: 'stable'
 
+      - name: Recreate Android Project
+        run: flutter create . --platforms=android --org com.example
+
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Build Debug APK with Verbose Logs
-        run: flutter build apk --debug --stacktrace --info
+      - name: Build Debug APK Verbose
+        run: flutter build apk --debug -v
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
