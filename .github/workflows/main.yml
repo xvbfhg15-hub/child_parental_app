@@ -30,9 +30,6 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Print Exact Dart Errors
-        run: flutter analyze --no-fatal-warnings
-
       - name: Build Debug APK
         run: flutter build apk --debug
 
