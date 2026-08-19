@@ -24,6 +24,9 @@ jobs:
         with:
           channel: 'stable'
 
+      - name: Create Android Platform
+        run: flutter create . --platforms=android --org com.example
+
       - name: Install dependencies
         run: flutter pub get
 
@@ -34,5 +37,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: app-debug-apk
-          # استخدام النجمة كملت كارد (wildcard) لتجد الملف أينما كان
           path: '**/app-debug.apk'
