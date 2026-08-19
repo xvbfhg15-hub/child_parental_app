@@ -30,8 +30,11 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Build Debug APK with Output Logs
-        run: flutter build apk --debug --no-pub
+      - name: Test Dart Compilation
+        run: flutter build bundle
+
+      - name: Build Debug APK
+        run: flutter build apk --debug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
