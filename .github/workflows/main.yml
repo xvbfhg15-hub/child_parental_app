@@ -27,19 +27,20 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Build APK (Fixing Gradle & Constraints)
-        run: |
-          flutter build apk --debug --no-pub --no-tree-shake-icons || true
-          flutter build bundle || true
+      - name: Build Debug APK
+        run: flutter build apk --debug
 
-      - name: Force Build APK
+      - name: Find and Upload APK
         run: |
-          cd android || exit 0
-          chmod +x gradlew
-          ./gradlew assembleDebug --warning-mode none
-
-      - name: Locate and Upload APK
+          # البحث عن ملف APK في أي مكان داخل المجلد
+          path_to_apk=$(find . -name "*.apk" | head -n 1)
+          echo "Found APK at: $path_to_apk"
+          
+          # رفع الملف باستخدام أداة actions/upload-artifact@v4
+          # (هنا سنستخدم curl أو نترك الـ Action يقوم بالمهمة)
+        
+      - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: app-debug-apk
-          path: '**/build/app/outputs/flutter-apk/*.apk'
+          name: my-app-apk
+          path: '**/*.apk'
