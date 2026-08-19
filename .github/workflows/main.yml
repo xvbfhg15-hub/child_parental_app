@@ -24,12 +24,13 @@ jobs:
         with:
           channel: 'stable'
 
-      - name: Recreate Android Project & Fix MinSDK
+      - name: Recreate Android Project
+        run: flutter create . --platforms=android --org com.example
+
+      - name: Fix MinSDK automatically
         run: |
-          flutter create . --platforms=android --org com.example
-          sed -i 's/minSdkVersion flutter.minSdkVersion/minSdkVersion 21/g' android/app/build.gradle
-          sed -i 's/minSdkVersion 16/minSdkVersion 21/g' android/app/build.gradle
-          sed -i 's/minSdkVersion 19/minSdkVersion 21/g' android/app/build.gradle
+          find android/ -type f \( -name "build.gradle" -o -name "build.gradle.kts" \) -exec sed -i 's/minSdkVersion = .*/minSdkVersion = 21/g' {} +
+          find android/ -type f \( -name "build.gradle" -o -name "build.gradle.kts" \) -exec sed -i 's/minSdkVersion .*/minSdkVersion 21/g' {} +
 
       - name: Install dependencies
         run: flutter pub get
