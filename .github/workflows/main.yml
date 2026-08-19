@@ -24,17 +24,18 @@ jobs:
         with:
           channel: 'stable'
 
-      - name: Clean previous builds
-        run: flutter clean
-
-      - name: Recreate Android files
-        run: flutter create . --platforms=android --org com.example
+      - name: Recreate Android Project
+        run: |
+          flutter create . --platforms=android --org com.example
+          cd android
+          echo "android.useAndroidX=true" >> gradle.properties
+          echo "android.enableJetifier=true" >> gradle.properties
 
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Build Debug APK
-        run: flutter build apk --debug --no-tree-shake-icons
+      - name: Build APK Verbose
+        run: flutter build apk --debug --suppress-analytics
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
