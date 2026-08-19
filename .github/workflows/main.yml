@@ -30,9 +30,8 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Check Specific Errors
-        run: |
-          flutter analyze --no-fatal-warnings | grep -E "error •" || true
+      - name: Validate Dart Code
+        run: flutter analyze
 
       - name: Build Debug APK
         run: flutter build apk --debug
