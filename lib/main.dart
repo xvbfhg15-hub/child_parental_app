@@ -7,13 +7,18 @@ import 'package:intl/intl.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  // ====== إعدادات Firebase المدمجة من كود JavaScript ======
+  // تم تحويل firebaseConfig إلى FirebaseOptions
   await Firebase.initializeApp(
     options: const FirebaseOptions(
       apiKey: "AIzaSyCsRl3Pc3eEJgrgZLYtDZ-91Ir5MzFMw8c",
-      appId: "1:375107383090:web:2818ec6aec79fd95fcb12b",
-      messagingSenderId: "375107383090",
-      projectId: "parentalcontrol-f192f",
+      authDomain: "parentalcontrol-f192f.firebaseapp.com",
       databaseURL: "https://parentalcontrol-f192f-default-rtdb.firebaseio.com",
+      projectId: "parentalcontrol-f192f",
+      storageBucket: "parentalcontrol-f192f.firebasestorage.app",
+      messagingSenderId: "375107383090",
+      appId: "1:375107383090:web:2818ec6aec79fd95fcb12b",
+      measurementId: "G-RDT7S5G4CP",
     ),
   );
 
@@ -269,6 +274,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     color: Color(0xFF001018)),
                               )
                             : Text(
+                                _isRegisterMode                            : Text(
                                 _isRegisterMode ? 'إنشاء حساب' : 'تسجيل الدخول',
                                 style: const TextStyle(
                                     fontSize: 16, fontWeight: FontWeight.w700),
