@@ -32,13 +32,15 @@ jobs:
           echo "android.useAndroidX=true" >> android/gradle.properties
           echo "android.enableJetifier=true" >> android/gradle.properties
           sed -i 's/minSdkVersion .*/minSdkVersion 21/g' android/app/build.gradle || true
-          sed -i 's/minSdkVersion = .*/minSdkVersion = 21/g' android/app/build.gradle || true
+          sed -i 's/minSdkVersion = .*/minSdkVersion 21/g' android/app/build.gradle || true
 
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Build Debug APK
-        run: flutter build apk --debug --suppress-analytics
+      - name: Build Debug APK with Stacktrace
+        run: |
+          cd android
+          ./gradlew assembleDebug --stacktrace --full-stacktrace
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
