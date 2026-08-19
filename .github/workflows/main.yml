@@ -27,12 +27,11 @@ jobs:
       - name: Recreate Android Project
         run: flutter create . --platforms=android --org com.example
 
-      - name: Get Dependencies
+      - name: Install dependencies
         run: flutter pub get
 
       - name: Build Debug APK
-        run: flutter build apk --debug --no-tree-shake-icons
-        continue-on-error: false
+        run: flutter build apk --debug --gradle-args=--stacktrace
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
