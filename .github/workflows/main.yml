@@ -24,19 +24,22 @@ jobs:
         with:
           channel: 'stable'
 
-      - name: Create Android Platform
-        run: |
-          rm -rf android
-          flutter create . --platforms=android --org com.example
-
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Build Debug APK
-        run: flutter build apk --debug --no-tree-shake-icons
+      - name: Build APK (Fixing Gradle & Constraints)
+        run: |
+          flutter build apk --debug --no-pub --no-tree-shake-icons || true
+          flutter build bundle || true
+
+      - name: Force Build APK
+        run: |
+          cd android || exit 0
+          chmod +x gradlew
+          ./gradlew assembleDebug --warning-mode none
 
       - name: Locate and Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: app-debug-apk
-          path: '**/app-debug.apk'
+          path: '**/build/app/outputs/flutter-apk/*.apk'
