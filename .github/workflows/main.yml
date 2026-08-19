@@ -24,7 +24,7 @@ jobs:
         with:
           channel: 'stable'
 
-      - name: Re-create Android Platform Cleanly
+      - name: Create Android Platform
         run: |
           rm -rf android
           flutter create . --platforms=android --org com.example
@@ -33,7 +33,7 @@ jobs:
         run: flutter pub get
 
       - name: Build Debug APK
-        run: flutter build apk --debug --suppress-analytics
+        run: flutter build apk --debug --no-tree-shake-icons
 
       - name: Locate and Upload APK
         uses: actions/upload-artifact@v4
